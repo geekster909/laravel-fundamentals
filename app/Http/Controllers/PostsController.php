@@ -14,6 +14,8 @@ class PostsController extends Controller
     public function index()
     {
         //
+
+        return 'This is the post controller';
     }
 
     /**
