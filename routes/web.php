@@ -40,3 +40,32 @@ Route::get('post/{id}', 'PostsController@show_post');
 
 Route::get('/contact', 'PostsController@contact');
 
+/*
+|--------------------------------------------------------------------------
+| DB Raw SQL Queries
+|--------------------------------------------------------------------------
+*/
+
+// Route::get('/insert', function(){
+// 	DB::insert('INSERT INTO posts(title, content) VALUES(?, ?)', ['PHP with Laravel', 'Laravel is the best thingthat has happened to PHP']);
+// });
+
+// Route::get('/read', function(){
+// 	$results = DB::select('SELECT * FROM posts WHERE id = ?', [1]);
+
+// 	foreach ($results as $post) {
+// 		return $post->title;
+// 	}
+// });
+
+// Route::get('/update', function(){
+// 	$update = DB::update('UPDATE posts SET title = "Updated title" WHERE id = ?', [2]);
+
+// 	return $update;
+// });
+
+// Route::get('/delete', function(){
+// 	$deleted = DB::delete('DELETE FROM posts WHERE id = ?', [2]);
+
+// 	return $deleted;
+// });
