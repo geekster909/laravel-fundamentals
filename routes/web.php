@@ -1,5 +1,5 @@
 <?php
-
+use App\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,9 +46,9 @@ Route::get('/contact', 'PostsController@contact');
 |--------------------------------------------------------------------------
 */
 
-// Route::get('/insert', function(){
-// 	DB::insert('INSERT INTO posts(title, content) VALUES(?, ?)', ['PHP with Laravel', 'Laravel is the best thingthat has happened to PHP']);
-// });
+Route::get('/insert', function(){
+	// DB::insert('INSERT INTO posts(title, content) VALUES(?, ?)', ['Larevel is awesome', 'Laravel is the best thingthat has happened to PHP, PERIOD']);
+});
 
 // Route::get('/read', function(){
 // 	$results = DB::select('SELECT * FROM posts WHERE id = ?', [1]);
@@ -69,3 +69,56 @@ Route::get('/contact', 'PostsController@contact');
 
 // 	return $deleted;
 // });
+
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT 
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/read', function() {
+	$posts = Post::all();
+	foreach ($posts as $post) {
+		return $post->title;
+	}
+});
+
+Route::get('/find', function() {
+	$post = Post::find(1);
+	return $post->title;
+});
+
+Route::get('/findwhere', function() {
+	$posts = Post::where('id', 1)->orderBy('id', 'desc')->take(1)->get();
+	foreach ($posts as $post) {
+		return $post->title;
+	}
+});
+
+Route::get('/findmore', function() {
+	// $posts = Post::findOrFail(1);
+	$posts = Post::where('id', '<', 50)->get();
+	foreach ($posts as $post) {
+		echo $post->title . '<br />';
+	}
+});
+
+Route::get('/basicinsert', function() {
+	$post = new Post;
+
+	$post->title = 'New Eloquent Title';
+	$post->content = 'Wow eloquent is really cool, look at this content';
+
+	$post->save();
+});
+Route::get('/basicupdate', function() {
+	$post = Post::find(4);
+
+	$post->title = 'New Eloquent Title v2';
+	$post->content = 'Wow eloquent is really cool, look at this content';
+
+	$post->save();
+});
+
+
+
