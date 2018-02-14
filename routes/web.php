@@ -129,7 +129,7 @@ Route::get('/update', function() {
 });
 
 Route::get('/delete', function() {
-	$post = Post::find(1);
+	$post = Post::find(7);
 	$post->delete();
 });
 
@@ -149,4 +149,12 @@ Route::get('/readsoftdelete', function() {
 	$post = Post::withTrashed()->get();
 
 	return $post;
+});
+
+Route::get('/restore', function() {
+	Post::withTrashed()->where('id', 6)->restore();
+});
+
+Route::get('/forcedelete', function() {
+	Post::onlyTrashed()->where('id', 7)->forceDelete();
 });
