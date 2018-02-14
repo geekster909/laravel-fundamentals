@@ -124,4 +124,6 @@ Route::get('/create', function() {
 	Post::create(['title'=>'The create method', 'content'=>'WOW I\'m learning a lot with Edwin Diaz']);
 });
 
-
+Route::get('/update', function() {
+	Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'NEW PHP TITLE', 'content' => 'I love my instructor']);
+});
