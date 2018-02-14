@@ -127,3 +127,15 @@ Route::get('/create', function() {
 Route::get('/update', function() {
 	Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'NEW PHP TITLE', 'content' => 'I love my instructor']);
 });
+
+Route::get('/delete', function() {
+	$post = Post::find(1);
+	$post->delete();
+});
+
+Route::get('/delete2', function() {
+	// Post::destroy(3);
+	Post::destroy([4,5]);
+
+	// Post::where('is_admin', 0)->delete();
+});
