@@ -139,3 +139,14 @@ Route::get('/delete2', function() {
 
 	// Post::where('is_admin', 0)->delete();
 });
+
+Route::get('/softdelete', function() {
+	Post::find(7)->delete();
+});
+
+Route::get('/readsoftdelete', function() {
+	// $post = Post::withTrashed()->where('id',6)->get();
+	$post = Post::withTrashed()->get();
+
+	return $post;
+});
