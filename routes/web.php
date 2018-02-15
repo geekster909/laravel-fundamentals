@@ -1,5 +1,8 @@
 <?php
+
 use App\Post;
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,9 +49,9 @@ Route::get('/contact', 'PostsController@contact');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/insert', function(){
+// Route::get('/insert', function(){
 	// DB::insert('INSERT INTO posts(title, content) VALUES(?, ?)', ['Larevel is awesome', 'Laravel is the best thingthat has happened to PHP, PERIOD']);
-});
+// });
 
 // Route::get('/read', function(){
 // 	$results = DB::select('SELECT * FROM posts WHERE id = ?', [1]);
@@ -157,4 +160,46 @@ Route::get('/restore', function() {
 
 Route::get('/forcedelete', function() {
 	Post::onlyTrashed()->where('id', 7)->forceDelete();
+});
+
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT Relationships
+|--------------------------------------------------------------------------
+*/
+
+// One to One relationship
+Route::get('/user/{id}/post', function($id) {
+	$user = User::find($id)->post;
+	// $user = User::find($id)->post->title;
+	// $user = User::find($id)->post->content;
+
+	return $user;
+});
+
+// Inverse One to One relationship
+Route::get('/post/{id}/user', function($id) {
+	return Post::find($id)->user->name;
+});
+
+// One to Many relationship
+Route::get('/posts', function() {
+	$user = User::find(1);
+
+	foreach($user->posts as $post) {
+		echo $post->title . '<br />';
+	}
+});
+
+// Many to Many relationship
+Route::get('/user/{id}/role', function($id) {
+	// $user = User::find($id);
+	
+	// foreach($user->roles as $role) {
+	// 	echo $role->name;
+	// }
+	$user = User::find($id)->roles()->orderBy('id', 'desc')->get();
+
+	return $user;
+
 });
