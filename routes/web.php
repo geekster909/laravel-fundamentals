@@ -1,8 +1,9 @@
 <?php
 
+use App\Country;
+use App\Photo;
 use App\Post;
 use App\User;
-use App\Country;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::get('/', function () {
 
 // Route::get('/post/{id}', 'PostsController@index');
 // Route::resource('posts', 'PostsController');
-Route::get('post/{id}', 'PostsController@show_post');
+// Route::get('post/{id}', 'PostsController@show_post');
 
 Route::get('/contact', 'PostsController@contact');
 
@@ -220,4 +221,41 @@ Route::get('/user/country', function() {
 	foreach ($country->posts as $post) {
 		echo $post->title. '<br />';
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| POLYMORPHIC Relationships
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/user/photos', function() {
+	$user = User::find(1);
+
+	foreach ($user->photos as $photo) {
+		echo $photo->path;
+	}
+});
+
+Route::get('/post/photos', function() {
+	$post = Post::find(1);
+
+	foreach ($post->photos as $photo) {
+		echo $photo->path . '<br/>';
+	}
+});
+
+Route::get('/post/{id}/photos', function($id) {
+	$post = Post::find($id);
+
+	foreach ($post->photos as $photo) {
+		echo $photo->path . '<br/>';
+	}
+});
+
+Route::get('/photo/{id}/post', function($id) {
+	$photo = Photo::findOrFail($id);
+
+	return $photo->imageable;
+	
 });
